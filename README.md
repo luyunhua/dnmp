@@ -243,6 +243,8 @@ $ docker network inspect dnmp_default
 ```
 这样就可以在www.site1.com中curl site2了。
 
+### 9.2 如何使用Xdebug进行调试？
+- https://gist.github.com/chadrien/c90927ec2d160ffea9c4
 ## License
 MIT
 
