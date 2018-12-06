@@ -3,3 +3,4 @@
 .env
 www/*
 !www/localhost/
+.editorconfig
