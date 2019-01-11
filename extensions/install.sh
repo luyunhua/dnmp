@@ -63,3 +63,26 @@ if [ "${PHP_SWOOLE}" != "false" ]; then
     && ( cd swoole && phpize && ./configure && make $mc && make install ) \
     && docker-php-ext-enable swoole
 fi
+
+
+# amqp require PHP version 5.5 or later.
+if [ "${PHP_AMQP}" != "false" ]; then
+    apt install -y librabbitmq-dev libssh-dev \
+    && docker-php-ext-install bcmath sockets \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp
+fi
+
+# Phalcon 3.4
+if [ "${PHP_PHALCON}" != "false" ]; then
+    mkdir phalcon \
+    && tar -vxf cphalcon-${PHP_PHALCON}.tar.gz -C phalcon --strip-components=1 \
+    && (cd phalcon/build && ./install) \
+    && docker-php-ext-enable phalcon
+fi
+
+# 默认安装 mongodb
+pecl channel-update pecl.php.net
+pecl install mongodb
+docker-php-ext-enable mongodb
+

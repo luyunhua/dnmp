@@ -22,11 +22,15 @@ services:
         PHP_XDEBUG: ${PHP72_XDEBUG}
         PHP_SWOOLE: ${PHP72_SWOOLE}
         PHP_REDIS: ${PHP72_REDIS}
+        PHP_AMQP: ${PHP72_AMQP}
+        PHP_PHALCON: ${PHP72_PHALCON}
         REPLACE_SOURCE_LIST: ${REPLACE_SOURCE_LIST}
     volumes:
       - ${SOURCE_DIR}:/var/www/html/:rw
       - ${PHP72_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
       - ${PHP72_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+    ports:
+        - "${PHP72_HOST_PORT}:9527"
     restart: always
     cap_add:
       - SYS_PTRACE
@@ -112,15 +116,15 @@ services:
       - REDIS_1_HOST=redis
       - REDIS_1_PORT=6379
 
-  node:
-    image: node:${NODE_VERSION}
-    volumes:
-      - ${SOURCE_DIR}:/var/www/html/:rw
-    working_dir: ${NODE_WORKING_DIR}
-    networks:
-      - default
-    ports:
-      - "${NODE_HOST_PORT}:8080"
-    command: "npm run serve"
+#   node:
+#     image: node:${NODE_VERSION}
+#     volumes:
+#       - ${SOURCE_DIR}:/var/www/html/:rw
+#     working_dir: ${NODE_WORKING_DIR}
+#     networks:
+#       - default
+#     ports:
+#       - "${NODE_HOST_PORT}:8080"
+#     command: "npm run serve"
 networks:
   default:
